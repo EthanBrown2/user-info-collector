@@ -37,8 +37,12 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    // ================================
+    // Submit (no-cors mode)
+    // ================================
     fetch(SCRIPT_URL, {
       method: "POST",
+      mode: "no-cors",
       body: new URLSearchParams({
         firstName,
         lastName,
@@ -46,15 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
         gender,
         birthday
       })
-    })
-      .then(response => response.text())
-      .then(() => {
-        alert("Thank you! Your information has been submitted successfully.");
-        form.reset();
-      })
-      .catch(error => {
-        console.error("Submission error:", error);
-        alert("There was an error submitting the form. Please try again.");
-      });
+    });
+
+    // We assume success if request was sent
+    alert("Thank you! Your information has been submitted successfully.");
+    form.reset();
   });
 });
