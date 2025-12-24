@@ -1,47 +1,62 @@
-const form = document.getElementById("user-form");
+// ================================
+// Configuration
+// ================================
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVClOxUo_GtOwJJrBg-tl9QQxqTVqvulx7fbgXpzMb8J_Lh2jIYAs7LsBMyLWiHR5-/exec";
 
-form.addEventListener("submit", async function (event) {
+// ================================
+// DOM Elements
+// ================================
+const form = document.getElementById("userForm");
+
+// ================================
+// Form Submission Handler
+// ================================
+form.addEventListener("submit", function (event) {
   event.preventDefault();
 
-  const formData = {
-    firstName: document.getElementById("firstName").value,
-    lastName: document.getElementById("lastName").value,
-    email: document.getElementById("email").value,
-    gender: document.getElementById("gender").value,
-    birthday: document.getElementById("birthday").value
-  };
+  // Collect form values
+  const firstName = document.getElementById("firstName").value.trim();
+  const lastName = document.getElementById("lastName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const gender = document.getElementById("gender").value;
+  const birthday = document.getElementById("birthday").value;
+  const consent = document.getElementById("consent").checked;
 
-  const confirmationMessage =
-    `Please confirm the following information:\n\n` +
-    `First Name: ${formData.firstName}\n` +
-    `Last Name: ${formData.lastName}\n` +
-    `Email: ${formData.email}\n` +
-    `Gender: ${formData.gender}\n` +
-    `Date of Birth: ${formData.birthday}`;
+  // Basic validation
+  if (!consent) {
+    alert("You must agree to the consent statement before submitting.");
+    return;
+  }
 
-  const confirmed = window.confirm(confirmationMessage);
+  // Confirm submission
+  const confirmed = confirm(
+    "Please confirm that the information you entered is correct."
+  );
 
-  if (!confirmed) return;
+  if (!confirmed) {
+    return;
+  }
 
-  try {
-    const response = await fetch("https://script.google.com/macros/s/AKfycbyVClOxUo_GtOwJJrBg-tl9QQxqTVqvulx7fbgXpzMb8J_Lh2jIYAs7LsBMyLWiHR5-/exec", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json"
-      }
+  // ================================
+  // Submit to Google Apps Script
+  // ================================
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: new URLSearchParams({
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      gender: gender,
+      birthday: birthday
+    })
+  })
+    .then(response => response.text())
+    .then(() => {
+      alert("Thank you! Your information has been submitted successfully.");
+      form.reset();
+    })
+    .catch(error => {
+      console.error("Submission error:", error);
+      alert("There was an error submitting the form. Please try again.");
     });
-
-    if (!response.ok) {
-      throw new Error("Submission failed");
-    }
-
-    form.innerHTML = `
-    <h2>Thank You!</h2>
-    <p>Your information has been successfully submitted.</p>
-  `;
-  } catch (error) {
-    alert("There was an error submittion the form. Please try again.");
-    console.error(error);
-  }  
 });
