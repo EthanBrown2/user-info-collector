@@ -1,31 +1,12 @@
-// ================================
-// Configuration
-// ================================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVClOxUo_GtOwJJrBg-tl9QQxqTVqvulx7fbgXpzMb8J_Lh2jIYAs7LsBMyLWiHR5-/exec";
-
-// ================================
-// Wait for DOM to Load
-// ================================
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("userForm");
 
-  if (!form) {
-    console.error("Form with id='userForm' not found.");
-    return;
-  }
-
-  form.addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const gender = document.getElementById("gender").value;
-    const birthday = document.getElementById("birthday").value;
+  form.addEventListener("submit", (e) => {
     const consent = document.getElementById("consent").checked;
 
     if (!consent) {
-      alert("You must agree to the consent statement before submitting.");
+      e.preventDefault();
+      alert("You must agree to the consent statement.");
       return;
     }
 
@@ -34,26 +15,14 @@ document.addEventListener("DOMContentLoaded", function () {
     );
 
     if (!confirmed) {
+      e.preventDefault();
       return;
     }
 
-    // ================================
-    // Submit (no-cors mode)
-    // ================================
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors",
-      body: new URLSearchParams({
-        firstName,
-        lastName,
-        email,
-        gender,
-        birthday
-      })
-    });
-
-    // We assume success if request was sent
-    alert("Thank you! Your information has been submitted successfully.");
-    form.reset();
+    // Allow form to submit normally
+    setTimeout(() => {
+      alert("Thank you! Your information has been submitted.");
+      form.reset();
+    }, 300);
   });
 });
