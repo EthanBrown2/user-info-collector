@@ -1,28 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("userForm");
+const openModalBtn = document.getElementById("openModalBtn");
+const closeModalBtn = document.getElementById("closeModalBtn");
+const modalOverlay = document.getElementById("modalOverlay");
 
-  form.addEventListener("submit", (e) => {
-    const consent = document.getElementById("consent").checked;
+openModalBtn.addEventListener("click", () => {
+  modalOverlay.classList.remove("hidden");
+});
 
-    if (!consent) {
-      e.preventDefault();
-      alert("You must agree to the consent statement.");
-      return;
-    }
+closeModalBtn.addEventListener("click", () => {
+  modalOverlay.classList.add("hidden");
+});
 
-    const confirmed = confirm(
-      "Please confirm that the information you entered is correct."
-    );
-
-    if (!confirmed) {
-      e.preventDefault();
-      return;
-    }
-
-    // Allow form to submit normally
-    setTimeout(() => {
-      alert("Thank you! Your information has been submitted.");
-      form.reset();
-    }, 300);
-  });
+// Optional: close modal when clicking outside the card
+modalOverlay.addEventListener("click", (event) => {
+  if (event.target === modalOverlay) {
+    modalOverlay.classList.add("hidden");
+  }
 });
