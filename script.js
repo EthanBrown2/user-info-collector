@@ -4,7 +4,7 @@ const modalOverlay = document.getElementById("modalOverlay");
 const form = document.getElementById("userForm");
 const statusMessage = document.getElementById("statusMessage");
 
-const SCRIPT_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyVClOxUo_GtOwJJrBg-tl9QQxqTVqvulx7fbgXpzMb8J_Lh2jIYAs7LsBMyLWiHR5-/exec";
 
 /* ---------- Modal Logic ---------- */
 
