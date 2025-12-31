@@ -34,22 +34,21 @@ form.addEventListener("submit", async (e) => {
 
   const formData = new FormData(form);
 
-  try {
-    const response = await fetch(SCRIPT_URL, {
-      method: "POST",
-      body: formData
-    });
+try {
+  await fetch(SCRIPT_URL, {
+    method: "POST",
+    body: formData,
+    mode: "no-cors"
+  });
 
-    if (!response.ok) {
-      throw new Error("Submission failed");
-    }
+  form.reset();
+  statusMessage.textContent =
+    "Thank you! Your information has been submitted.";
 
-    form.reset();
-    statusMessage.textContent = "Thank you! Your information has been submitted.";
+} catch (error) {
+  console.error(error);
+  statusMessage.textContent =
+    "There was an error submitting the form. Please try again.";
+}
 
-  } catch (error) {
-    console.error(error);
-    statusMessage.textContent =
-      "There was an error submitting the form. Please try again.";
-  }
 });
