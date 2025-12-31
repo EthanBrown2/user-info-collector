@@ -23,19 +23,60 @@
     </button>
   </main>
 
-  <!-- Modal Overlay (Hidden by default) -->
+  <!-- Modal -->
   <div id="modalOverlay" class="modal-overlay hidden">
-
-    <!-- Modal Card -->
     <div class="modal-card">
+
       <button id="closeModalBtn" class="close-btn">&times;</button>
 
-      <h2>Information Form</h2>
-      <p class="modal-text">
-        The form will live here in Version 2.
-      </p>
-    </div>
+      <h2>User Information</h2>
 
+      <form id="userForm">
+
+        <label>
+          First Name
+          <input type="text" name="firstName" required />
+        </label>
+
+        <label>
+          Last Name
+          <input type="text" name="lastName" required />
+        </label>
+
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+
+        <label>
+          Gender
+          <select name="gender" required>
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Prefer not to say</option>
+          </select>
+        </label>
+
+        <label>
+          Date of Birth
+          <input type="date" name="birthday" required />
+        </label>
+
+        <label class="consent">
+          <input type="checkbox" name="consent" required />
+          I consent to submitting this information
+        </label>
+
+        <button type="submit" class="primary-btn">
+          Submit
+        </button>
+
+      </form>
+
+      <p id="statusMessage" class="status"></p>
+
+    </div>
   </div>
 
   <script src="script.js"></script>
